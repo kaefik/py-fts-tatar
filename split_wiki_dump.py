@@ -2,6 +2,7 @@
     разделение дампа вики на отдельные статьи.
 '''
 import os
+import argparse
 
 
 def split_wiki(input_filename, out_folder='data/out/', kol_files_in_folder=10000):
@@ -38,5 +39,13 @@ def split_wiki(input_filename, out_folder='data/out/', kol_files_in_folder=10000
 
 
 if __name__ == '__main__':
-    filename = 'data/ttwiki-20200901-pages-articles-multistream.xml'
-    split_wiki(filename)
+    parser = argparse.ArgumentParser(description='Split dump wiki on many article.')
+    parser.add_argument('filename', type=str, help='path to file dump wiki')
+    parser.add_argument('--out_folder', default='data/out/', type=str,
+                        help='output folder(default: data/out/)')
+    parser.add_argument('--kol_files_in_folder', type=int, default=10000,
+                        help='count article in folder (default: 10000)')
+    args = parser.parse_args()
+
+    split_wiki(input_filename=args.filename, out_folder=args.out_folder,
+               kol_files_in_folder=args.kol_files_in_folder)
